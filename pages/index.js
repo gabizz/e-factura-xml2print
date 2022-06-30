@@ -80,26 +80,23 @@ return (
           {!item
             ? (
               <Grid item xs = {12}>
-                <Alert severity="info">
+                <Alert severity="info" icon={false}>
                   <Typography variant = "body2" align="center">
-                      Acest utilitar este destinat instituțiilor publice din România, care, începând cu 01.07.2022, primesc facturile
-                      de la furnizori prin sistemul ForexeBug / secțiunea eFactura.<br/>
-                      Se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
-                      Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub o licență MIT și susținut de <a href = "gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
-                      folosind tehnologiile react.js, next.js, xmlbuilder2, material-ui, dropzone fiind compilat și servit
-                       online sub forma de față grație 
-                      serviciului gratuit pus la dispoziție de vercel.com. 
+                      Acest utilitar este destinat instituțiilor publice din România, și se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
+                      Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub licență MIT, dezvoltat și susținut de {' '}
+                      <a href = "gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
                       <br/> Sursele aplicației sunt publicate la adresa {' '}
                       <a href ="https://github.com/gabizz/e-factura-xml2print" target = "_blank">https://github.com/gabizz/e-factura-xml2print</a>
-                      <br/>Aplicația web nu colecteză sub nici o formă datele
-                      facturilor Dvs. (toate procesările sunt realizate pe calculatorul Dvs., în browser.) 
+                      <br/><span style = {{color: "darkRed"}}><strong>NOTĂ GDPR:</strong>
+                       <i>Aplicația web nu colecteză sub nici o formă datele
+                      facturilor Dvs. (toate procesările sunt realizate pe calculatorul Dvs., în browser-ul web) </i></span>
                        
 
                   </Typography>
                   
                 </Alert>
                 <br/>
-              <div {...getRootProps()} style={{ border: "3px solid navy", height: "25vh" }}>
+              <div {...getRootProps()} style={{ border: "3px solid navy", height: "45vh" }}>
                 <input {...getInputProps()} />
                 <p align="center" style = {{fontSize: "2rem", fontWeight:800, color: "lightgrey"}}>
                   Trageți fișierul XML e-factura aici, <br/>sau faceți click pentru a-l încărca manual
