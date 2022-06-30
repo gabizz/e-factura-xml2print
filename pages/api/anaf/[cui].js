@@ -3,7 +3,7 @@ const API = "https://webservicesp.anaf.ro/PlatitorTvaRest/api/v6/ws/tva"
 const HEADERS = new Headers({
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Access-Control-Allow-Origin": "http://localhost:3000",
+    // "Access-Control-Allow-Origin": "http://localhost:3000",
     "Access-Control-Allow-Methods": "POST"
 })
 
