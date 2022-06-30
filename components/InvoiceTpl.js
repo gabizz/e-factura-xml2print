@@ -1,11 +1,10 @@
-import { Alert, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material'
-import React, { Fragment, useEffect, useState } from 'react'
+import { Alert, Grid, Typography } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import moment from "moment"
-import RichCard from "../src/RichCard"
-import TableStyle from "../src/TableStyle"
+import { useEffect, useState } from 'react'
 import styled from "styled-components"
-import Copyright from "../src/Copyright"
+import TableStyle from "./TableStyle"
+import RichCard from "./RichCard"
 
 const Party = ({ data }) => (
     <div style = {{fontSize:"0.8rem", paddingLeft:"10px"}}>

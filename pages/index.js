@@ -1,15 +1,14 @@
 import React, { Fragment, useState, useCallback, useRef } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-import Copyright from '../src/Copyright';
+import Copyright from '../components/Copyright';
 import {  Button, Card, Grid } from '@mui/material';
 import { useDropzone } from 'react-dropzone'
 import { create } from "xmlbuilder2"
-import InvoiceTpl from '../src/InvoiceTpl';
+import InvoiceTpl from '../components/InvoiceTpl';
 import { useReactToPrint } from 'react-to-print';
 import { MdPrint, MdRefresh } from "react-icons/md"
+import {useRouter} from "next/router"
 
 
 const converter = (bs) => {
@@ -27,6 +26,7 @@ export default function Index() {
 
   const [item, setItem] = useState(null)
   const printRef = useRef()
+  const router = useRouter()
 
   const printHandler = useReactToPrint({
     content: () => printRef.current,
@@ -102,6 +102,16 @@ return (
                   Trageți fișierul XML e-factura aici, <br/>sau faceți click pentru a-l încărca manual
                 </p>
               </div>
+                <br/>
+                <Card style = {{padding: "10px", border: "2px dashed lightgrey", boxShadow:"none", background: "aliceblue"}}>
+                <Grid container justifyContent="space-between" alignItems="center">
+                  <Grid item xs = {10}>
+                <strong style={{color: "red"}}>ÎN CURÂND!</strong> &nbsp; <i>formular web pentru generarea unui xml e-factura</i>
+                </Grid>
+                <Grid item><Button size="medium" color="primary" onClick={()=>router.push("/factura")} >VEZI CUM STĂM </Button></Grid>
+                </Grid>
+                </Card>
+                <br/>
               </Grid>
             )
             :(<Fragment>
