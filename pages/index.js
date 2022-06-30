@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import Copyright from '../src/Copyright';
-import { Alert, Button, Grid } from '@mui/material';
+import {  Button, Card, Grid } from '@mui/material';
 import { useDropzone } from 'react-dropzone'
 import { create } from "xmlbuilder2"
 import InvoiceTpl from '../src/InvoiceTpl';
@@ -74,27 +74,27 @@ return (
           <Grid item xs = {12} align="center">
             <br/>
           <Typography variant="h5" component="h3" gutterBottom style = {{fontWeight: 800, color: "navy"}}>
-            CONVERSIE XML E-FACTURA (RO)<br/> ÎN FORMAT UMAN
+            CONVERSIE XML E-FACTURA (RO) ÎN FORMAT TIPĂRIBIL
           </Typography>
           </Grid>
           {!item
             ? (
               <Grid item xs = {12}>
-                <Alert severity="info" icon={false}>
+                <Card style = {{padding: "10px", border: "2px dashed lightgrey", boxShadow:"none"}}>
                   <Typography variant = "body2" align="center">
                       Acest utilitar este destinat instituțiilor publice din România, și se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
                       Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub licență MIT, dezvoltat și susținut de {' '}
                       <a href = "gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
                       <br/> Sursele aplicației sunt publicate la adresa {' '}
                       <a href ="https://github.com/gabizz/e-factura-xml2print" target = "_blank">https://github.com/gabizz/e-factura-xml2print</a>
-                      <br/><span style = {{color: "darkRed"}}><strong>NOTĂ GDPR:</strong>
-                       <i>Aplicația web nu colecteză sub nici o formă datele
-                      facturilor Dvs. (toate procesările sunt realizate pe calculatorul Dvs., în browser-ul web) </i></span>
-                       
+                      <br/>
+                      <strong style = {{color:"darkred"}}>NOTĂ GDPR:</strong>{' '}
+                       <i>Această aplicație web nu colecteză date de nici un fel
+                        (toate procesările sunt realizate pe calculatorul Dvs., în browser-ul web) </i>
 
                   </Typography>
                   
-                </Alert>
+                </Card>
                 <br/>
               <div {...getRootProps()} style={{ border: "3px solid navy", height: "45vh" }}>
                 <input {...getInputProps()} />
