@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import Copyright from '../src/Copyright';
-import { Button, Grid } from '@mui/material';
+import { Alert, Button, Grid } from '@mui/material';
 import { useDropzone } from 'react-dropzone'
 import { create } from "xmlbuilder2"
 import InvoiceTpl from '../src/InvoiceTpl';
@@ -80,6 +80,25 @@ return (
           {!item
             ? (
               <Grid item xs = {12}>
+                <Alert severity="info">
+                  <Typography variant = "body2" align="center">
+                      Acest utilitar este destinat instituțiilor publice din România, care, începând cu 01.07.2022, primesc facturile
+                      de la furnizori prin sistemul ForexeBug / secțiunea eFactura.<br/>
+                      Se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
+                      Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub o licență MIT și susținut de <a href = "gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
+                      folosind tehnologiile react.js, next.js, xmlbuilder2, material-ui, dropzone fiind compilat și servit
+                       online sub forma de față grație 
+                      serviciului gratuit pus la dispoziție de vercel.com. 
+                      <br/> Sursele aplicației sunt publicate la adresa {' '}
+                      <a href ="https://github.com/gabizz/e-factura-xml2print" target = "_blank">https://github.com/gabizz/e-factura-xml2print</a>
+                      <br/>Aplicația web nu colecteză sub nici o formă datele
+                      facturilor Dvs. (toate procesările sunt realizate pe calculatorul Dvs., în browser.) 
+                       
+
+                  </Typography>
+                  
+                </Alert>
+                <br/>
               <div {...getRootProps()} style={{ border: "3px solid navy", height: "25vh" }}>
                 <input {...getInputProps()} />
                 <p align="center" style = {{fontSize: "2rem", fontWeight:800, color: "lightgrey"}}>
