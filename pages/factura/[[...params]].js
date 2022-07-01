@@ -6,6 +6,8 @@ import CounterPart from "../../components/CounterPart"
 import React, { Fragment, useEffect, useState } from 'react'
 import { MdAdd } from 'react-icons/md'
 import { useRouter } from 'next/router'
+import InvoiceItems from '../../components/InvoiceItems'
+import MyInput from '../../components/MyIInput'
 
 const getCompanyDataFromAnaf = async cui => {
     let result
@@ -24,11 +26,22 @@ const Factura = ({ params }) => {
 
     const router = useRouter()
     const [item, setItem] = useState({
+        nr: 1,
+        dt: moment().format("YYYY-MM-DD"),
         furnizor: {
-            cui: ""
+            cui: "",
+            denumire:"",
+            adresa:"",
+            cui:"",
+            nrRegCom:"",
+            scpTVA: true
         },
         beneficiar: {
-            cui: ""
+            cui: "",
+            denumire:"",
+            adresa:"",
+            cui:"",
+            nrRegCom:""
         },
         products: []
     })
@@ -42,6 +55,8 @@ const Factura = ({ params }) => {
         }
 
     }, [params])
+
+    const inputHandler = name => ev => setItem({...item, [name]: ev.target.value})
 
     const inputHandler2 = (l1, l2) => ev => setItem({
         ...item,
@@ -67,7 +82,9 @@ const Factura = ({ params }) => {
             ]})
     }
 
-    const xmlHandler = () => {}
+    const xmlHandler = () => { alert("Da! Desigur!\n Te-ai gandit că e gratis...\nREGRET SĂ TE DEZAMĂGESC: NU E GRATIS!!\nCumpără un program de facturare, că dacă lucrezi cu\
+\"bugetari\" sunt absolut convins că îți permiți să plătești 20-30 de lei pe lună pe un abonament la SmartBill...\nEu asta fac...\n \
+Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de implementat și timpul meu e prețios...")}
 
     return (
         <Container>
@@ -133,53 +150,24 @@ const Factura = ({ params }) => {
 
                 <Card style={{ marginTop: "10px", padding: "10px" }}>
                     <Grid container spacing = {1} alignItems="center" justifyContent="space-between">
+                        <Grid item xs = {2} align="center"><Typography variant="h5" color="primary">FACTURA</Typography></Grid>
+                    <Grid item xs ={2}>
+                            <MyInput value = {item.nr} label ="NR" onChange={inputHandler("nr")}/>
+                        </Grid>
+                        <Grid item xs ={3} align="center">
+                            <MyInput type="date" value = {item.dt} label="DIN DATA" onChange={inputHandler("dt")}/>
+                        </Grid>
+                        <Grid item xs ={5}/>
+                        <Grid item xs = {12}><hr/></Grid>
                         <Typography  variant='subtitle1' color="primary">&nbsp;&nbsp;&nbsp;Produse/servicii</Typography>
                         <Grid item>
                         <IconButton color="secondary" onClick = {addProductHandler}>
                             <MdAdd/>
                         </IconButton>
                         </Grid>
+
                         <Grid item xs ={12}>
-                            <table border={1} width="100%" cellSpacing={0}>
-                                <thead>
-                                    <tr>
-                                    <th>Nr.crt</th>
-                                    <th>Denumire produs/serviciu</th>
-                                    <th>U.M.</th>   
-                                    <th>Cantit</th>   
-                                    <th>P.U.(lei)</th>   
-                                    <th>Valoare(lei)</th>
-                                    {item.furnizor.scpTVA
-                                        ? ( <>
-                                            <th>Cota TVA(%)</th>
-                                            <th>Valoare TVA(lei)</th>
-                                        </>)
-                                        : null
-                                    }
-
-                                    </tr>   
-                                </thead>
-                                <tbody>
-                            {item.products.map( (e,i) => (
-                                <tr key={i}>
-                                    <td>{i+1}</td>
-                                    <td>{e.name}</td>
-                                    <td align="center">{e.unit}</td>
-                                    <td align="center">{e.amount}</td>
-                                    <td align="center">{e.price}</td>
-                                    <td align="center">{e.val=e.price*e.amount}</td>
-                                    {item.furnizor.scpTVA
-                                        ? ( <>
-                                            <td align="center">{e.taxPercent}</td>
-                                            <td align="center">{e.price*e.amount + e.price*e.amount*e.taxPercent/100}</td>
-                                        </>)
-                                        : null
-                                    }
-
-                                </tr>
-                            ))}
-                            </tbody>
-                            </table>
+                           {item && <InvoiceItems data = {item} onChange = {ev=> setItem(ev)} />}
                         </Grid>
                         <Grid item xs = {12}>
                             <Button variant="contained" color="primary" fullWidth onClick = {xmlHandler}>
@@ -187,7 +175,8 @@ const Factura = ({ params }) => {
                             </Button>
                         </Grid>
                         <Grid item xs = {12}>
-                            <Button variant="outlined" color="secondary" fullWidth onClick = {()=>router.push("/")}>
+                            <Button variant="outlined" color="secondary" fullWidth onClick = {()=>router.push("/")}
+                           >
                                 MERGI LA CONVERTORUL XML ÎN FORMAT TIPĂRIBIL
                             </Button>
                         </Grid>
