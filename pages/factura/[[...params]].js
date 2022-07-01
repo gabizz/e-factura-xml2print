@@ -1,4 +1,4 @@
-import { Button, Card, Container, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { Button, Card, Container, Dialog, DialogTitle, Grid, IconButton, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import moment from 'moment'
 import CounterPart from "../../components/CounterPart"
@@ -45,7 +45,7 @@ const Factura = ({ params }) => {
         },
         products: []
     })
-
+    const [exported, setExported] = useState()
 
 
     useEffect(() => {
@@ -82,9 +82,12 @@ const Factura = ({ params }) => {
             ]})
     }
 
-    const xmlHandler = () => { alert("Da! Desigur!\n Te-ai gandit că e gratis...\nREGRET SĂ TE DEZAMĂGESC: NU E GRATIS!!\nCumpără un program de facturare, că dacă lucrezi cu\
+    const xmlHandler = () => { 
+        alert("Da! Desigur!\n Te-ai gandit că e gratis...\nREGRET SĂ TE DEZAMĂGESC: NU E GRATIS!!\nCumpără un program de facturare, că dacă lucrezi cu\
 \"bugetari\" sunt absolut convins că îți permiți să plătești 20-30 de lei pe lună pe un abonament la SmartBill...\nEu asta fac...\n \
-Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de implementat și timpul meu e prețios...")}
+Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de implementat și timpul meu e prețios...")
+        setExported(item)
+}
 
     return (
         <Container>
@@ -184,7 +187,12 @@ Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de im
                     
                 </Card>
             </Box>
+            {exported && (
+                <Dialog open = {Boolean(exported)} onClose = {()=>setExported(null)}>
+                    <DialogTitle>EXPORT</DialogTitle>
+                </Dialog>
 
+            )}
         </Container>
     )
 }

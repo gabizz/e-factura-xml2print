@@ -1,7 +1,9 @@
 import { Alert, Input, MenuItem } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback } from 'react'
 import MyInput from './MyIInput'
+import UNITS from "../src/codes.json"
+
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -23,15 +25,14 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const ISO_UNITS = [
-    {key: "MON", label: "MON - luna"}
-]
+
 
 export default function InvoiceItems({ data, onChange }) {
 
     const classes = useStyles()
     const item = data || {}
 
+const RO_UNITS = useCallback(()=>UNITS.filter( el => el.ro), []) 
     const inputHandler = (name, index) => ev => {
         console.log(name, index)
         let prods = [...item.products]
@@ -78,8 +79,8 @@ export default function InvoiceItems({ data, onChange }) {
                                 </td>
                                 <td align="center">
                                     <MyInput value={e.unit} select onChange={inputHandler("unit",i)}>
-                                        {ISO_UNITS.map((e,i) => (
-                                            <MenuItem key={e} value = {e.key}>{e.label}</MenuItem>
+                                        {RO_UNITS().map((e,i) => (
+                                            <MenuItem key={e} value = {e.key}>{e.ro}</MenuItem>
                                         ))}
                                     </MyInput>
                                     </td>
