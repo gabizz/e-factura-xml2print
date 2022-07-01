@@ -62,7 +62,7 @@ export default function InvoiceItems({ data, onChange }) {
                             {item && item.furnizor && item.furnizor.scpTVA
                                 ? (<>
                                     <th align="left"  width="10%">Cota TVA(%)</th>
-                                    <th align="left"  width="10%">Valoare TVA(lei)</th>
+                                    <th align="left"  width="10%">Valoare cuTVA(lei)</th>
                                 </>)
                                 : null
                             }
