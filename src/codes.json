@@ -247,7 +247,7 @@
 {"key":"AM", "value":"ampoule"},
 {"key":"AMH", "value":"ampere hour"},
 {"key":"AMP", "value":"ampere"},
-{"key":"ANN", "value":"year"},
+{"key":"ANN", "value":"year", "ro": "an"},
 {"key":"AP", "value":"aluminium pound only"},
 {"key":"APZ", "value":"troy ounce or apothecaries' ounce"},
 {"key":"AQ", "value":"anti-hemophilic factor (AHF) unit"},

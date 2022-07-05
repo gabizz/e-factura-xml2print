@@ -1,4 +1,4 @@
-import { Button, Card, Container, Dialog, DialogTitle, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { Alert, Button, Card, Container, Dialog, DialogContent, DialogTitle, Grid, IconButton, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import moment from 'moment'
 import CounterPart from "../../components/CounterPart"
@@ -8,6 +8,10 @@ import { MdAdd } from 'react-icons/md'
 import { useRouter } from 'next/router'
 import InvoiceItems from '../../components/InvoiceItems'
 import MyInput from '../../components/MyIInput'
+import XmlCuTva from '../../components/XmlCuTva'
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles(theme => ({dialogPaper: {minWidth: "90vw", mimHeight: "80vh"}}))
 
 const getCompanyDataFromAnaf = async cui => {
     let result
@@ -23,11 +27,12 @@ const getCompanyDataFromAnaf = async cui => {
 
 
 const Factura = ({ params }) => {
-
+    const classes = useStyles()
     const router = useRouter()
     const [item, setItem] = useState({
         nr: 1,
         dt: moment().format("YYYY-MM-DD"),
+        scadenta: moment().add(30, "days").format("YYYY-MM-DD"),
         furnizor: {
             cui: "",
             denumire:"",
@@ -82,12 +87,8 @@ const Factura = ({ params }) => {
             ]})
     }
 
-    const xmlHandler = () => { 
-        alert("Da! Desigur!\n Te-ai gandit că e gratis...\nREGRET SĂ TE DEZAMĂGESC: NU E GRATIS!!\nCumpără un program de facturare, că dacă lucrezi cu\
-\"bugetari\" sunt absolut convins că îți permiți să plătești 20-30 de lei pe lună pe un abonament la SmartBill...\nEu asta fac...\n \
-Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de implementat și timpul meu e prețios...")
-        setExported(item)
-}
+    const xmlHandler = () =>  setExported(item)
+
 
     return (
         <Container>
@@ -152,7 +153,8 @@ Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de im
                 </Grid>
 
                 <Card style={{ marginTop: "10px", padding: "10px" }}>
-                    <Grid container spacing = {1} alignItems="center" justifyContent="space-between">
+                    <br/>
+                    <Grid container spacing = {1} alignItems="center" justifyContent="flex-start">
                         <Grid item xs = {2} align="center"><Typography variant="h5" color="primary">FACTURA</Typography></Grid>
                     <Grid item xs ={2}>
                             <MyInput value = {item.nr} label ="NR" onChange={inputHandler("nr")}/>
@@ -160,10 +162,15 @@ Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de im
                         <Grid item xs ={3} align="center">
                             <MyInput type="date" value = {item.dt} label="DIN DATA" onChange={inputHandler("dt")}/>
                         </Grid>
+                        <Grid item xs ={3} align="center">
+                            <MyInput type="date" value = {item.scadenta} label="SCANDETA LA" onChange={inputHandler("scadenta")}/>
+                        </Grid>
                         <Grid item xs ={5}/>
                         <Grid item xs = {12}><hr/></Grid>
+                        <Grid item xs={11}>
                         <Typography  variant='subtitle1' color="primary">&nbsp;&nbsp;&nbsp;Produse/servicii</Typography>
-                        <Grid item>
+                        </Grid>
+                        <Grid item xs = {1} align="right">
                         <IconButton color="secondary" onClick = {addProductHandler}>
                             <MdAdd/>
                         </IconButton>
@@ -188,8 +195,29 @@ Nu te supăra pe mine pentru gluma asta, dar e-Factura nu e o treabă usor de im
                 </Card>
             </Box>
             {exported && (
-                <Dialog open = {Boolean(exported)} onClose = {()=>setExported(null)}>
-                    <DialogTitle>EXPORT</DialogTitle>
+                <Dialog open = {Boolean(exported)} onClose = {()=>setExported(null)} classes = {{paper: classes.dialogPaper}}>
+                    <DialogTitle>EXPORT XML</DialogTitle>
+                    <DialogContent>
+                        <Alert>
+                            Da! Desigur!<br/>
+                         Te-ai gandit că e gratis...<br/>
+                         REGRET SĂ TE DEZAMĂGESC: NU E GRATIS!!<br/>
+                        Cumpără un program de facturare, sunt convins că îți permiți să plătești 20-30 de lei pe 
+                        lună pe un abonament la SmartBill...<br/>
+                        Eu asta fac...<br/>
+                       <b>e-Factura</b> nu e o treabă deloc usor de implementat și timpul meu e prețios...<br/><br/>
+                        Ca să mă crezi, uite, cam așa ar trebui să arate XML-ul pentru datele pe care le-ai introdus acum 5 minute (nu garantez 
+                        că ți se va valida de către ANAF... poți să încerci dacă vrei)
+                        </Alert>
+                        <hr/>
+                        {item && item.furnizor && item.furnizor.scpTVA
+                            ?  <XmlCuTva data = {item} />
+                            :  <XmlFaraTva data = {item} />
+                        
+                        }
+                       
+                        {/* {item && <pre>{JSON.stringify(item, null, 4)}</pre>} */}
+                    </DialogContent>
                 </Dialog>
 
             )}

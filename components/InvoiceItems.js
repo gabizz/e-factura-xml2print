@@ -122,7 +122,11 @@ const RO_UNITS = useCallback(()=>UNITS.filter( el => el.ro), [])
                 </table>
                
             )}
-             <Alert severity="success"><small style={{color: "red"}}>FĂ CLICK DREAPTA PE <strong style={{color:"navy"}}>NR.CRT</strong> PENTRU A ȘTERGE O POZITIE</small></Alert>
+            {item && item.products && item.products.length > 0  && (
+             <Alert severity="success"><small style={{color: "red"}}>FĂ CLICK DREAPTA PE 
+             <strong style={{color:"navy"}}>NR.CRT</strong> PENTRU A ȘTERGE O POZITIE</small></Alert>
+            )}
+
         </Fragment>
 
     )

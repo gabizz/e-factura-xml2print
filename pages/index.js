@@ -2,7 +2,7 @@ import React, { Fragment, useState, useCallback, useRef } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Copyright from '../components/Copyright';
-import {  Button, Card, Grid } from '@mui/material';
+import {  Button, Card, Grid, Link } from '@mui/material';
 import { useDropzone } from 'react-dropzone'
 import { create } from "xmlbuilder2"
 import InvoiceTpl from '../components/InvoiceTpl';
@@ -84,7 +84,7 @@ return (
                   <Typography variant = "body2" align="center">
                       Acest utilitar este destinat instituțiilor publice din România, și se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
                       Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub licență MIT, dezvoltat și susținut de {' '}
-                      <a href = "gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
+                      <a href = "https://gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
                       <br/> Sursele aplicației sunt publicate la adresa {' '}
                       <a href ="https://github.com/gabizz/e-factura-xml2print" target = "_blank">https://github.com/gabizz/e-factura-xml2print</a>
                       <br/>
@@ -106,9 +106,9 @@ return (
                 <Card style = {{padding: "10px", border: "2px dashed lightgrey", boxShadow:"none", background: "aliceblue"}}>
                 <Grid container justifyContent="space-between" alignItems="center">
                   <Grid item xs = {10}>
-                <strong style={{color: "red"}}>ÎN CURÂND!</strong> &nbsp; <i>formular web pentru generarea unui xml e-factura</i>
+                <strong style={{color: "red"}}>OPERAȚIUNE INVERSĂ  </strong> &nbsp; <i>- formular web pentru generare XML e-Factura pus la dispoziție de ANAF</i>
                 </Grid>
-                <Grid item><Button size="medium" color="primary" onClick={()=>router.push("/factura")} >VEZI CUM STĂM </Button></Grid>
+                <Grid item><Link href = "https://www.anaf.ro/CompletareFactura/faces/factura/informatiigenerale.xhtml" target="_blank"><Button size="medium" color="primary">LINK AICI </Button></Link></Grid>
                 </Grid>
                 </Card>
                 <br/>

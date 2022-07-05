@@ -17,6 +17,7 @@ const CounterPart = ({data}) => {
                     &nbsp; &nbsp; &nbsp;  &nbsp;
                     Reg.Com.: <strong>{data.nrRegCom||"- - - - - - -"}</strong>
                 </Grid>
+                <pre>{console.log(data)}</pre>
             </Grid>
         ) : (
             <div>&nbsp;</div>
