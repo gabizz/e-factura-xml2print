@@ -2,7 +2,7 @@ import { Alert, Input, MenuItem } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React, { Fragment, useCallback } from 'react'
 import MyInput from './MyIInput'
-import UNITS from "../src/codes.json"
+import UNITS from "../src/units.json"
 
 
 const useStyles = makeStyles(theme => ({

@@ -5,62 +5,9 @@ import { useEffect, useState } from 'react'
 import styled from "styled-components"
 import TableStyle from "./TableStyle"
 import RichCard from "./RichCard"
-import ISO_UNIT_CODES from "../src/codes.json"
+import ISO_UNIT_CODES from "../src/units.json"
+import Party from './Party'
 
-const Party = ({ data }) => (
-    <div style = {{fontSize:"0.8rem", paddingLeft:"10px"}}>
-    <Grid container spacing={0.5}>
-        <Grid item xs={12}>
-            Denumire <br />
-            <strong>{data["cac:Party"]["cac:PartyLegalEntity"]["cbc:RegistrationName"]}</strong>
-        </Grid>
-        <Grid item xs={6}>
-            CIF/CUI: {' '}
-            <strong>{
-                data["cac:Party"]["cac:PartyLegalEntity"]["cbc:CompanyID"]
-                || data["cac:Party"]["cac:PartyTaxScheme"]["cbc:CompanyID"]
-            }
-            </strong>
-        </Grid>
-
-        <Grid item xs={12}>
-            Adresa: {' '}
-            <strong>
-                {data["cac:Party"]["cac:PostalAddress"]["cbc:StreetName"]}
-            </strong>
-        </Grid>
-        <Grid item >
-            Localitatea: {' '}
-            <strong>
-                {data["cac:Party"]["cac:PostalAddress"]["cbc:CityName"]}
-            </strong>
-            &nbsp;
-            Județul:{' '}
-            <strong>
-                {data["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]}
-            </strong>
-            &nbsp;&nbsp;
-            Țara: {' '}
-            <strong>
-                {data["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"]}
-            </strong>
-            &nbsp;
-            {/* capital social */}
-            {/* <>
-                {data["cac:Party"]["cac:PartyLegalEntity"]["cbc:CompanyLegalForm"]}
-            </> */}
-            <br/>
-            E-mail: <strong>{ data["cac:Party"]["cac:Contact"] 
-            ? data["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"] 
-            
-            :"---"
-         }</strong>
-        </Grid>
-
-
-    </Grid>
-    </div>
-)
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -129,12 +76,12 @@ export default function InvoiceTpl({ data }) {
 
                         <Grid item xs={6}>
                             <RichCard title="FURNIZOR">
-                                <Party data={Invoice["cac:AccountingSupplierParty"]} />
+                                <Party data={Invoice} type="furnizor"/>
                             </RichCard>
                         </Grid>
                         <Grid item xs={6}>
                             <RichCard title={<div style={{ color: "black" }}>BENEFICIAR</div>} >
-                                <Party data={Invoice["cac:AccountingCustomerParty"]} />
+                                <Party data={Invoice} type="beneficiar"/>
                             </RichCard>
                         </Grid>
                         <Grid item xs={12}>
@@ -145,9 +92,9 @@ export default function InvoiceTpl({ data }) {
                                         <th align='center'>Denumirea produselor sau a serviciilor</th>
                                         <th align='center'>U.M.</th>
                                         <th align='center'>Cant.</th>
-                                        <th align='center'>Pret unitar<br />(fara TVA)<br />-Lei-</th>
-                                        <th align='center'>Valoare<br />-Lei-</th>
-                                        <th align='center'>Valoare<br />TVA<br />-Lei-</th>
+                                        <th align='center'>Pret unitar<br />(fara TVA)</th>
+                                        <th align='center'>Valoare</th>
+                                        <th align='center'>Valoare<br />TVA</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,7 +111,7 @@ export default function InvoiceTpl({ data }) {
                                     ))}
 
                                     <tr>
-                                        <td colspan="4" rowspan="3">Intocmit de: -<br/>CNP: -<br/>Numele delegatului: -<br/>B.I./C.I: -<br/>Mijloc transport: -<br/>Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br/>Semnaturile</td>
+                                        <td colSpan="4" rowspan="3">Intocmit de: -<br/>CNP: -<br/>Numele delegatului: -<br/>B.I./C.I: -<br/>Mijloc transport: -<br/>Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br/>Semnaturile</td>
                                         <td align="center"><strong>TOTAL</strong></td>
                                         <td align="center">
                                             {/* total fara tva */}
@@ -177,13 +124,13 @@ export default function InvoiceTpl({ data }) {
                                     </tr>
                                     <tr>
                                         <td align='center'><strong>TOTAL DE PLATĂ</strong></td>
-                                        <td colspan="2"  align="center"><strong>
+                                        <td colSpan="2"  align="center"><strong>
                                             {/* total general */}
                                             {item["Invoice"]["cac:LegalMonetaryTotal"]["cbc:TaxInclusiveAmount"]["#"]}
                                         </strong></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" align="center">Semnatura de primire</td>
+                                        <td colSpan="3" align="center">Semnatura de primire</td>
                                     </tr>
                                 </tbody>
                             </TableStyle>

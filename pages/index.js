@@ -68,7 +68,7 @@ const { getRootProps, getInputProps } = useDropzone({ onDrop })
 return (
   <React.Fragment>
     <Container maxWidth="lg">
-      {console.log("item:", item)}
+      {console.log("item:::::", item)}
       {/* <Box sx={{ my: 4 }}> */}
         <Grid container>
           <Grid item xs = {12} align="center">
