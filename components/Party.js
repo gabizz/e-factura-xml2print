@@ -25,7 +25,9 @@ export default function Party({ data, type }) {
         jud: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"],
         tara: partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"],
         email: partyData["cac:Party"]["cac:Contact"] ? partyData["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"] : null,
-        iban: type==="beneficiar" ? data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]["cbc:ID"] : null,
+        iban: type==="beneficiar" 
+            ? (data["cac:PaymentMeans"] && data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]["cbc:ID"]) 
+            : null
 
 
 
