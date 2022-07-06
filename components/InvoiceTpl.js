@@ -6,6 +6,7 @@ import styled from "styled-components"
 import TableStyle from "./TableStyle"
 import RichCard from "./RichCard"
 import ISO_UNIT_CODES from "../src/units.json"
+import COUNTIES  from "../src/counties.json"
 import Party from './Party'
 
 
@@ -15,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const translateUnit = (codes, name) => {
+const translateCodes = (codes, name) => {
     let res = codes.find(el => el.key === name)
     if ( typeof res !== "undefined" ) {
         res = res.ro || res.value
@@ -24,6 +25,8 @@ const translateUnit = (codes, name) => {
     }
     return res
 }
+
+
 
 export default function InvoiceTpl({ data }) {
 
@@ -41,7 +44,7 @@ export default function InvoiceTpl({ data }) {
             } else { elems.push(data.Invoice["cac:InvoiceLine"]) }
             elems = elems.map(e => ({
                 pu: e["cac:Price"]["cbc:PriceAmount"]["#"],
-                um: translateUnit(ISO_UNIT_CODES, e["cbc:InvoicedQuantity"]["@unitCode"]),
+                um: translateCodes(ISO_UNIT_CODES, e["cbc:InvoicedQuantity"]["@unitCode"]),
                 cantit: e["cbc:InvoicedQuantity"]["#"],
                 name: e["cac:Item"]["cbc:Name"],
                 tva_procent: e["cac:Item"]["cac:ClassifiedTaxCategory"]["cbc:Percent"] || 0

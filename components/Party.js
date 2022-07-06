@@ -1,10 +1,21 @@
 import { Grid } from '@mui/material'
 import React from 'react'
+import COUNTIES from "../src/counties.json"
 
 const getCui = data => {
     let res = (data["cac:Party"]["cac:PartyLegalEntity"]["cbc:CompanyID"]) || data["cac:Party"]["cac:PartyTaxScheme"]["cbc:CompanyID"]
     if (typeof res === "object") {
         res = res["#"]
+    }
+    return res
+}
+
+const translateCodes = (codes, name) => {
+    let res = codes.find(el => el.key === name)
+    if ( typeof res !== "undefined" ) {
+        res = res.ro || res.value
+    } else {
+        res = "N/A"
     }
     return res
 }
@@ -22,7 +33,7 @@ export default function Party({ data, type }) {
         cui: getCui(partyData),
         adresa: partyData["cac:Party"]["cac:PostalAddress"]["cbc:StreetName"],
         loc: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CityName"],
-        jud: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"],
+        jud: translateCodes(COUNTIES, partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]),
         tara: partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"],
         email: partyData["cac:Party"]["cac:Contact"] ? partyData["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"] : null,
         iban: type==="beneficiar" 
