@@ -164,7 +164,7 @@ export default function InvoiceTpl({ data }) {
                                     ))}
 
                                     <tr>
-                                        <td colspan="4" rowspan="3">Intocmit de: Gabriel-Claudiu Maftei<br/>CNP: -<br/>Numele delegatului: -<br/>B.I./C.I: -<br/>Mijloc transport: -<br/>Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br/>Semnaturile</td>
+                                        <td colspan="4" rowspan="3">Intocmit de: -<br/>CNP: -<br/>Numele delegatului: -<br/>B.I./C.I: -<br/>Mijloc transport: -<br/>Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br/>Semnaturile</td>
                                         <td align="center"><strong>TOTAL</strong></td>
                                         <td align="center">
                                             {/* total fara tva */}
