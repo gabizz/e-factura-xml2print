@@ -33,8 +33,15 @@ export default function Party({ data, type }) {
         cui: getCui(partyData),
         adresa: partyData["cac:Party"]["cac:PostalAddress"]["cbc:StreetName"],
         loc: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CityName"],
-        jud: translateCodes(COUNTIES, partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]),
-        tara: partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"],
+        jud: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]
+        && partyData["cac:Party"]
+        && partyData["cac:Party"]["cac:PostalAddress"]
+        && partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]
+        && translateCodes(COUNTIES, partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]),
+        tara: (partyData["cac:Party"]
+        && partyData["cac:Party"]["cac:PostalAddress"]
+        && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]
+        && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"]) || "N/A",
         email: partyData["cac:Party"]["cac:Contact"] ? partyData["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"] : null,
         iban: type==="beneficiar" 
             ? (data["cac:PaymentMeans"] && data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]["cbc:ID"]) 
