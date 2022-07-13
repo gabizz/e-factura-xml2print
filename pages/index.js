@@ -1,14 +1,13 @@
-import React, { Fragment, useState, useCallback, useRef } from 'react';
+import { Button, Card, Grid, Link } from '@mui/material';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Copyright from '../components/Copyright';
-import {  Button, Card, Grid, Link } from '@mui/material';
-import { useDropzone } from 'react-dropzone'
-import { create } from "xmlbuilder2"
-import InvoiceTpl from '../components/InvoiceTpl';
+import React, { Fragment, useCallback, useRef, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { MdPrint, MdRefresh } from "react-icons/md";
 import { useReactToPrint } from 'react-to-print';
-import { MdPrint, MdRefresh } from "react-icons/md"
-import {useRouter} from "next/router"
+import { create } from "xmlbuilder2";
+import Copyright from '../components/Copyright';
+import InvoiceTpl from '../components/InvoiceTpl';
 
 
 const converter = (bs) => {
@@ -26,7 +25,6 @@ export default function Index() {
 
   const [item, setItem] = useState(null)
   const printRef = useRef()
-  const router = useRouter()
 
   const printHandler = useReactToPrint({
     content: () => printRef.current,
@@ -81,17 +79,16 @@ return (
             ? (
               <Grid item xs = {12}>
                 <Card style = {{padding: "10px", border: "2px dashed lightgrey", boxShadow:"none"}}>
-                  <Typography variant = "body2" align="center">
-                      Acest utilitar este destinat instituțiilor publice din România, și se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).<br/>
+                  <Typography variant = "caption" align="center">
+                      Acest utilitar este destinat instituțiilor publice din România, și se dorește a fi o alternativă mai facilă la soluția pusă la dispoziție de ANAF (utilitarul JAVA).{' '}
                       Serviciul de față este un proiect open-source, oferit "așa-cum-este" sub licență MIT, dezvoltat și susținut de {' '}
                       <a href = "https://gmaftei.ro" target = "_blank">Maftei Gabriel-Claudiu P.F.A. Arad</a>,{' '}
-                      <br/> Sursele aplicației sunt publicate la adresa {' '}
+                       codul sursă fiind disponibil aici{' '}{' '}
                       <a href ="https://github.com/gabizz/e-factura-xml2print" target = "_blank">https://github.com/gabizz/e-factura-xml2print</a>
-                      <br/>
-                      <strong style = {{color:"darkred"}}>NOTĂ GDPR:</strong>{' '}
-                       <i>Această aplicație web nu colecteză date de nici un fel
-                        (toate procesările sunt realizate pe calculatorul Dvs., în browser-ul web) </i>
-
+                      <hr style = {{border: "1px dashed lightgrey"}} />
+                      <div style={{color: "red", align:"center", fontWeight: "700"}}>
+                      Pe măsura feed-back-ului pe care îl primim, încercăm să facem acestă soluție compatibilă cu facturile emise din cât mai multe aplicații de facturare.
+                      </div>
                   </Typography>
                   
                 </Card>

@@ -29,23 +29,38 @@ export default function Party({ data, type }) {
         : data["cac:AccountingSupplierParty"]
 
     const item = {
-        denumire: partyData["cac:Party"]["cac:PartyLegalEntity"]["cbc:RegistrationName"],
+        denumire: partyData["cac:Party"]
+                && partyData["cac:Party"]["cac:PartyLegalEntity"]
+                && partyData["cac:Party"]["cac:PartyLegalEntity"]["cbc:RegistrationName"],
         cui: getCui(partyData),
-        adresa: partyData["cac:Party"]["cac:PostalAddress"]["cbc:StreetName"],
-        loc: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CityName"],
-        jud: partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]
-        && partyData["cac:Party"]
-        && partyData["cac:Party"]["cac:PostalAddress"]
-        && partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]
-        && translateCodes(COUNTIES, partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]),
+        adresa: partyData["cac:Party"]
+            && partyData["cac:Party"]["cac:PostalAddress"]
+            && partyData["cac:Party"]["cac:PostalAddress"]["cbc:StreetName"],
+
+        loc: partyData["cac:Party"]
+            && partyData["cac:Party"]["cac:PostalAddress"]
+            && partyData["cac:Party"]["cac:PostalAddress"]["cbc:CityName"],
+
+        jud: partyData["cac:Party"]
+            && partyData["cac:Party"]["cac:PostalAddress"]
+            && partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]
+            && translateCodes(COUNTIES, partyData["cac:Party"]["cac:PostalAddress"]["cbc:CountrySubentity"]),
+
         tara: (partyData["cac:Party"]
-        && partyData["cac:Party"]["cac:PostalAddress"]
-        && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]
-        && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"]) || "N/A",
-        email: partyData["cac:Party"]["cac:Contact"] ? partyData["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"] : null,
+                && partyData["cac:Party"]["cac:PostalAddress"]
+                && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]
+                && partyData["cac:Party"]["cac:PostalAddress"]["cac:Country"]["cbc:IdentificationCode"]) 
+                || "N/A",
+
+        email: partyData["cac:Party"]
+            && partyData["cac:Party"]["cac:Contact"]
+            && partyData["cac:Party"]["cac:Contact"]["cbc:ElectronicMail"],
+        
         iban: type==="beneficiar" 
-            ? (data["cac:PaymentMeans"] && data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]["cbc:ID"]) 
-            : null
+            ? ( data["cac:PaymentMeans"] 
+                && data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]
+                && data["cac:PaymentMeans"]["cac:PayeeFinancialAccount"]["cbc:ID"]
+            ) : null
 
 
 

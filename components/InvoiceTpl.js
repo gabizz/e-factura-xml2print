@@ -8,6 +8,7 @@ import RichCard from "./RichCard"
 import ISO_UNIT_CODES from "../src/units.json"
 import COUNTIES  from "../src/counties.json"
 import Party from './Party'
+import InvoiceItems from './InvoiceItems'
 
 
 const useStyles = makeStyles(theme => ({
@@ -88,55 +89,7 @@ export default function InvoiceTpl({ data }) {
                             </RichCard>
                         </Grid>
                         <Grid item xs={12}>
-                            <TableStyle>
-                                <thead>
-                                    <tr>
-                                        <th align='center'>Nr.<br />crt.</th>
-                                        <th align='center'>Denumirea produselor sau a serviciilor</th>
-                                        <th align='center'>U.M.</th>
-                                        <th align='center'>Cant.</th>
-                                        <th align='center'>Pret unitar<br />(fara TVA)</th>
-                                        <th align='center'>Valoare</th>
-                                        <th align='center'>Valoare<br />TVA</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {invoiceItems.map((e, i) => (
-                                        <tr key={i}>
-                                            <td align="center">{i + 1}</td>
-                                            <td>{e.name}</td>
-                                            <td align='center'>{e.um}</td>
-                                            <td align="center">{e.cantit}</td>
-                                            <td align="center">{e.pu}</td>
-                                            <td align="center">{(+e.pu * +e.cantit).toFixed(2)}</td>
-                                            <td align="center">{(e.tva_procent/100 * (e.cantit * e.pu)).toFixed(2)}</td>
-                                        </tr>
-                                    ))}
-
-                                    <tr>
-                                        <td colSpan="4" rowspan="3">Intocmit de: -<br/>CNP: -<br/>Numele delegatului: -<br/>B.I./C.I: -<br/>Mijloc transport: -<br/>Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br/>Semnaturile</td>
-                                        <td align="center"><strong>TOTAL</strong></td>
-                                        <td align="center">
-                                            {/* total fara tva */}
-                                            {item["Invoice"]["cac:TaxTotal"]["cac:TaxSubtotal"]["cbc:TaxableAmount"]["#"]}
-                                        </td>
-                                        <td align="center">
-                                            {/* tva total */}
-                                            {item["Invoice"]["cac:TaxTotal"]["cbc:TaxAmount"]["#"]}    
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align='center'><strong>TOTAL DE PLATĂ</strong></td>
-                                        <td colSpan="2"  align="center"><strong>
-                                            {/* total general */}
-                                            {item["Invoice"]["cac:LegalMonetaryTotal"]["cbc:TaxInclusiveAmount"]["#"]}
-                                        </strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td colSpan="3" align="center">Semnatura de primire</td>
-                                    </tr>
-                                </tbody>
-                            </TableStyle>
+                           <InvoiceItems data = {item} items = {invoiceItems} />
                         </Grid>
                         <Grid item xs={6}>Scadență: <strong>{moment(Invoice["cbc:DueDate"]).format("DD.MM.YYYY")}</strong></Grid>
                         <Grid item xs={6} align="right">Moneda: <strong>{Invoice["cbc:DocumentCurrencyCode"]}</strong></Grid>
