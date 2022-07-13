@@ -97,7 +97,7 @@ export default function InvoiceTpl({ data }) {
                     <Grid item xs = {12} align="right">
                     <div className = "printable">
                         <hr style = {{margin:0}}/>
-                        <Typography variant="caption" style={{color: "grey", fontWeight:800}}>aplicații smart pentru administrația publică - gmaftei.ro</Typography>
+                        <Typography variant="caption" style={{color: "grey", fontWeight:800}}>servicii web smart pentru administrația publică - gmaftei.ro</Typography>
                         </div>
                     </Grid>
                     {/* <pre align="left">{JSON.stringify(item, null, 3)}</pre> */}
