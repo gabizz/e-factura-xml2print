@@ -639,7 +639,7 @@
 {"key":"E3", "value":"trailer"},
 {"key":"E4", "value":"gross kilogram"},
 {"key":"E5", "value":"metric long ton"},
-{"key":"EA", "value":"each"},
+{"key":"EA", "value":"each", "ro": "buc."},
 {"key":"EB", "value":"electronic mail box"},
 {"key":"EC", "value":"each per month"},
 {"key":"EP", "value":"eleven pack"},
