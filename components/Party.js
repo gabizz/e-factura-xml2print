@@ -28,7 +28,7 @@ export default function Party({ data, type }) {
         ? data["cac:AccountingCustomerParty"]
         : data["cac:AccountingSupplierParty"]
 
-    const item = {
+    let item = {
         denumire: partyData["cac:Party"]
                 && partyData["cac:Party"]["cac:PartyLegalEntity"]
                 && partyData["cac:Party"]["cac:PartyLegalEntity"]["cbc:RegistrationName"],
@@ -65,6 +65,17 @@ export default function Party({ data, type }) {
 
 
     }
+    //Dedeman fix ---> all specs are with #
+
+    item = Object.keys(item).reduce( (acc,key) => {
+        let r = item[key]
+        if (typeof item[key] === "object") {
+            r = (item[key] && item[key].hasOwnProperty(["#"]))  ? item[key]["#"] : item[key]
+        } 
+        acc = {...acc, [key]: r}
+        
+        return acc
+    }, {})
 
 
     return (

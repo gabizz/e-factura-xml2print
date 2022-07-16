@@ -10,7 +10,7 @@ export default function Copyright() {
       width: "100%", padding: "4px 10px 4px 10px"
     }}>
       <Grid container justifyContent = "space-between">
-        <Grid item sm ="true">
+        <Grid item sm ={true}>
           <small>
             {'Copyright © '}  {new Date().getFullYear()} {' - '}
             <MuiLink color="inherit" href="https://gmaftei.ro">
@@ -18,7 +18,7 @@ export default function Copyright() {
             </MuiLink>{' '}
           </small>
         </Grid>
-        <Grid item sm="true">
+        <Grid item>
           <small>
         <strong style = {{color:"darkred"}}>NOTĂ GDPR:</strong>{' '}
                        <i>Această aplicație web nu colecteză date de nici un fel

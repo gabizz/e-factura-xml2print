@@ -30,6 +30,22 @@ export default function InvoiceItems({ data, items }) {
     const classes = useStyles()
     items = items || []
 
+    //Dedeman fix ---> all specs are with #
+
+    items = items.reduce( (acc,el) => {
+        let invoiceLine = {...el}
+        invoiceLine = Object.keys(invoiceLine).reduce( (a,k) => {
+            let r = invoiceLine[k];
+            if ( typeof invoiceLine[k] ===  "object") {
+                r = invoiceLine[k] = invoiceLine[k].hasOwnProperty("#")
+                    ? invoiceLine[k]["#"]
+                    : invoiceLine[k]
+            } 
+            return {...a, [k]: r}
+        }, {})
+        return [...acc, invoiceLine]
+    }, [])
+
 
 
 
@@ -63,7 +79,7 @@ export default function InvoiceItems({ data, items }) {
                         ))}
 
                         <tr>
-                            <td colSpan="4" rowspan="3">Intocmit de: -<br />CNP: -<br />Numele delegatului: -<br />B.I./C.I: -<br />Mijloc transport: -<br />Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br />Semnaturile</td>
+                            <td colSpan="4" rowSpan="3">Intocmit de: -<br />CNP: -<br />Numele delegatului: -<br />B.I./C.I: -<br />Mijloc transport: -<br />Expedierea s-a efectuat in prezenta noastra la data de ............ ora ......<br />Semnaturile</td>
                             <td align="center"><strong>TOTAL</strong></td>
                             <td align="center">
                                 {/* total fara tva */}

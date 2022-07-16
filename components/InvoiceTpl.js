@@ -33,11 +33,35 @@ export default function InvoiceTpl({ data }) {
 
     const classes = useStyles()
     const [item, setItem] = useState(null)
+    const [invoiceHeader, setInvoiceHeader] = useState(null)
     const [invoiceItems, setInvoiceItems] = useState([])
     const [error, setError] = useState(null)
 
     useEffect(() => {
 
+        // set invoice info (headers)
+        if (data && data.Invoice) {
+            const {Invoice} = data
+            let obj = {
+                nr: Invoice["cbc:ID"],
+                dt: Invoice["cbc:IssueDate"],
+                dueDate: Invoice["cbc:DueDate"],
+                currency: Invoice["cbc:DocumentCurrencyCode"]
+            }
+            //Dedeman fix ---> all specs are with #
+
+            obj = Object.keys(obj).reduce((acc,key) => {
+                if ( typeof obj[key] === "object") {
+                    acc = {...acc, [key]: obj[key].hasOwnProperty("#") ? obj[key]["#"] : obj[key] }
+                } else {
+                    acc = {...acc, [key]: obj[key]}
+                }
+                return acc
+            }, {})
+            setInvoiceHeader(obj)
+
+        }
+        // set invoice lines
         if (data && data.Invoice && data.Invoice["cac:InvoiceLine"]) {
             let elems = []
             if (Array.isArray(data.Invoice["cac:InvoiceLine"])) {
@@ -50,7 +74,7 @@ export default function InvoiceTpl({ data }) {
                 name: e["cac:Item"]["cbc:Name"],
                 tva_procent: e["cac:Item"]["cac:ClassifiedTaxCategory"]["cbc:Percent"] || 0
             }))
-            console.log("data::::", data, "\nelems:", elems)
+            
             setInvoiceItems(elems)
 
 
@@ -61,7 +85,6 @@ export default function InvoiceTpl({ data }) {
     const { Invoice } = item || {}
     return (
         <Styled>
-            {console.log("error: ", error)}
             {error && <Alert severity="error">{error.msg}</Alert>}
 
             {item && (
@@ -74,7 +97,7 @@ export default function InvoiceTpl({ data }) {
                                 </strong>
                             </Typography>
                             <Typography variant = "h6" component="div" style = {{lineHeight:1.2, fontWeight: 300}}>
-                            nr. <strong>{Invoice["cbc:ID"]}</strong> din data <strong>{moment(Invoice["cbc:IssueDate"]).format("DD.MM.YYYY")}</strong>
+                            nr. <strong>{invoiceHeader.nr}</strong> din data <strong>{moment(invoiceHeader.dt).format("DD.MM.YYYY")}</strong>
                             </Typography>
                         </Grid>
 
@@ -91,8 +114,8 @@ export default function InvoiceTpl({ data }) {
                         <Grid item xs={12}>
                            <InvoiceItems data = {item} items = {invoiceItems} />
                         </Grid>
-                        <Grid item xs={6}>Scadență: <strong>{moment(Invoice["cbc:DueDate"]).format("DD.MM.YYYY")}</strong></Grid>
-                        <Grid item xs={6} align="right">Moneda: <strong>{Invoice["cbc:DocumentCurrencyCode"]}</strong></Grid>
+                        <Grid item xs={6}>Scadență: <strong>{moment(invoiceHeader.dueDate).format("DD.MM.YYYY")}</strong></Grid>
+                        <Grid item xs={6} align="right">Moneda: <strong>{invoiceHeader.currency}</strong></Grid>
                     </Grid>
                     <Grid item xs = {12} align="right">
                     <div className = "printable">
