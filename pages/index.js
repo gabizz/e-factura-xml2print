@@ -3,11 +3,13 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import React, { Fragment, useCallback, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { MdPrint, MdRefresh } from "react-icons/md";
+import { MdPictureAsPdf, MdPrint, MdRefresh } from "react-icons/md";
 import { useReactToPrint } from 'react-to-print';
 import { create } from "xmlbuilder2";
 import Copyright from '../components/Copyright';
 import InvoiceTpl from '../components/InvoiceTpl';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 
 const converter = (bs) => {
@@ -19,6 +21,8 @@ const converter = (bs) => {
   }
   return result
 }
+
+
 
 
 export default function Index() {
@@ -57,7 +61,35 @@ export default function Index() {
   }, [])
 
 
+  const handleDownloadPdf = async (filename) => {
+    console.log("itme:", item)
+    const element = printRef.current;
+    const padding = 15
+    const pdf = new jsPDF({orientation: 'p', unit:'mm', size: [297, 210]})
+    const  canvas = await html2canvas(element)
+    const imgData = canvas.toDataURL("image/png");
+    // console.log("imgData: \n",imgData)
+    const imgProps= pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth()-padding;
+    const pdfHeight = (imgProps.height * pdfWidth) / (imgProps.width);
 
+    pdf.addImage(imgData, 'PNG', padding, padding, pdfWidth-padding, pdfHeight-padding, undefined, "FAST");
+    pdf.save(filename+'.pdf');    
+  };
+
+const preparePdfName = elem => {
+  let result = "factura_"
+  const {Invoice} = elem || {}
+  if ( item.Invoice['cbc:ID'] && item.Invoice['cbc:IssueDate']) {
+      result += typeof item.Invoice['cbc:ID'] === "object" ? item.Invoice['cbc:ID']["#"] : item.Invoice['cbc:ID']
+      result += "__"
+      result += typeof item.Invoice['cbc:IssueDate'] === "object" ? item.Invoice['cbc:IssueDate']["#"] : item.Invoice['cbc:IssueDate']
+  } else {
+    result +=moment().format("YYYY-MM-DD")
+  }
+      return result      
+                  
+}
 
 
 const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -118,8 +150,14 @@ return (
                     onClick={() => setItem(null)}>covertește o altă factură</Button>
                  </Grid>
                  <Grid item xs = {6} align="right">
+                  <Button 
+                    variant = "outlined" color ="secondary"
+                    startIcon = {<MdPictureAsPdf/>}
+                    onClick = {()=>handleDownloadPdf(preparePdfName(item))
+                  } >Salvează PDF</Button>
+                  &nbsp;
                  <Button 
-                    color="primary" 
+                    color="primary" variant = "outlined" 
                     startIcon = {<MdPrint/>}
                     onClick={printHandler}>tipărește factura</Button>
                  </Grid>
