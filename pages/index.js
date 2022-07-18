@@ -70,10 +70,10 @@ export default function Index() {
     const imgData = canvas.toDataURL("image/png");
     // console.log("imgData: \n",imgData)
     const imgProps= pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth()-padding;
-    const pdfHeight = (imgProps.height * pdfWidth) / (imgProps.width);
+    const pdfWidth = pdf.internal.pageSize.getWidth()-padding*2;
+    const pdfHeight = (imgProps.height * (pdfWidth)) / (imgProps.width-padding);
 
-    pdf.addImage(imgData, 'PNG', padding, padding, pdfWidth-padding, pdfHeight-padding, undefined, "FAST");
+    pdf.addImage(imgData, 'PNG', padding, padding, pdfWidth, pdfHeight, undefined, "FAST");
     pdf.save(filename+'.pdf');    
   };
 
