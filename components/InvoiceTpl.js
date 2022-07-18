@@ -134,14 +134,7 @@ export default function InvoiceTpl({ data }) {
 
 
 const Styled = styled.div`
-@media all {
 
-  @page {
-    size: A4 portrait;
-    } 
- 
-  
-}
 @media screen: {
     .printable { display: none;}
 }
